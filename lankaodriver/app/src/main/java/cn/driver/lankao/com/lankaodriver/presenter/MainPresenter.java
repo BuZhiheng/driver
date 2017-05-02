@@ -25,13 +25,13 @@ public class MainPresenter implements IMainPresenter{
         String permission = Manifest.permission.ACCESS_FINE_LOCATION;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (PermissionUtil.checkNoPermission(context, permission)) {
-                String[] reqPer = new String[]{Manifest.permission.READ_PHONE_STATE,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                };
-                view.requestPermission(reqPer);
+//                String[] reqPer = new String[]{Manifest.permission.READ_PHONE_STATE,
+//                        Manifest.permission.ACCESS_COARSE_LOCATION,
+//                        Manifest.permission.ACCESS_FINE_LOCATION,
+//                        Manifest.permission.READ_EXTERNAL_STORAGE,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                };
+//                view.requestPermission(reqPer);
                 view.showToast(CommonCode.MSG_LOCATION_PERMISSION_MISS);
             } else {
                 view.location();
