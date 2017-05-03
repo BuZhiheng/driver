@@ -7,4 +7,8 @@ import com.baidu.location.BDLocation;
 public interface IMainPresenter {
     void checkPermission(Context context);
     void updateLoc(BDLocation bdLocation);
+
+    void setStopLoc();
+
+    void setExit();
 }

@@ -41,14 +41,49 @@ public class MainPresenter implements IMainPresenter{
         }
     }
     @Override
-    public void updateLoc(BDLocation bdLocation) {
+    public void updateLoc(final BDLocation bdLocation) {
         Driver driver = new Driver();
         driver.carLat = (float) bdLocation.getLatitude();
         driver.carLng = (float) bdLocation.getLongitude();
+        driver.carType = CommonCode.CAR_SERVICE_TYPE_WORK;
         driver.update(Driver.getDriverId(), new UpdateListener() {
             @Override
             public void done(BmobException e) {
+                if (e == null){
 //                view.showToast("上传成功");
+                    view.updateSuccess(bdLocation);
+                } else {
+                }
+            }
+        });
+    }
+    @Override
+    public void setStopLoc() {
+        Driver driver = new Driver();
+        driver.carType = CommonCode.CAR_SERVICE_TYPE_WORK_OUT;
+        driver.update(Driver.getDriverId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null){
+                    view.showWorkOut();
+                } else {
+                    view.showToast("操作失败,请重试");
+                }
+            }
+        });
+    }
+    @Override
+    public void setExit() {
+        Driver driver = new Driver();
+        driver.carType = CommonCode.CAR_SERVICE_TYPE_WORK_OUT;
+        driver.update(Driver.getDriverId(), new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null){
+                    view.showExit();
+                } else {
+                    view.showToast("退出失败,请重试");
+                }
             }
         });
     }

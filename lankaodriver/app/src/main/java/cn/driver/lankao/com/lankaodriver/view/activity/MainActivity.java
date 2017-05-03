@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements IMainView {
                 MyDialog.getAlertDialog(this, "温馨提示", "确定结束?", true, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MyLocationClient.stopLoc();
+                        MyLocationClient.stopLoc();//先关闭定位
                         dialog.dismiss();
-                        tvAddress.setText("请点击开启定位...");
+                        presenter.setStopLoc();//上传云端,设置carType为0
                     }
                 });
                 break;
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
                 MyDialog.getAlertDialog(this, "提示", "确定退出软件?", true, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MyLocationClient.stopLoc();
-                        finish();
+                        MyLocationClient.stopLoc();//先关闭定位
+                        presenter.setExit();//上传云端,设置carType为0
                     }
                 });
                 break;
@@ -67,19 +67,27 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         ToastUtil.show(toast);
     }
     @Override
-    public void requestPermission(String[] reqPer) {
-        requestPermission(reqPer);
-    }
-    @Override
     public void location() {
         showToast("开启定位成功");
         MyLocationClient.loc(new MyLocationClient.MyLocationListener() {
             @Override
             public void onLocSuccess(BDLocation bdLocation) {
-                tvAddress.setText("上次定位成功：\n\n"+TimeUtil.getTime(TimeUtil.FORMAT_YYMMDD_HMS) + "\n\n" + bdLocation.getAddrStr());
                 presenter.updateLoc(bdLocation);
             }
         });
+    }
+    @Override
+    public void showWorkOut() {
+        tvAddress.setText("请点击开启定位...");
+        showToast("操作成功");
+    }
+    @Override
+    public void showExit() {
+        finish();
+    }
+    @Override
+    public void updateSuccess(BDLocation bdLocation) {
+        tvAddress.setText("上次定位成功：\n\n" + TimeUtil.getTime(TimeUtil.FORMAT_YYMMDD_HMS) + "\n\n" + bdLocation.getAddrStr());
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
